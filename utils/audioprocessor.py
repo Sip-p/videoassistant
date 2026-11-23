@@ -2,6 +2,7 @@
 from pathlib import Path
 import yt_dlp
 from pydub import AudioSegment
+import shutil
 
 
 # =========================================================
@@ -20,12 +21,20 @@ from pydub import AudioSegment
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 
-FFMPEG_DIR = (
-    BASE_DIR
-    / "ffmpeg"
-    / "ffmpeg-9.0.2-essentials_build"
-    / "bin"
-)
+# FFMPEG_DIR = (
+#     BASE_DIR
+#     / "ffmpeg"
+#     / "ffmpeg-9.0.2-essentials_build"
+#     / "bin"
+# )
+if __name__ == "__main__" or shutil.which("ffmpeg") is None:
+    # Local Windows FFmpeg installation
+    LOCAL_FFMPEG_DIR = (
+        BASE_DIR
+        / "ffmpeg"
+        / "ffmpeg-9.0.2-essentials_build"
+        / "bin"
+    )
 
 FFMPEG_EXE = FFMPEG_DIR / "ffmpeg.exe"
 FFPROBE_EXE = FFMPEG_DIR / "ffprobe.exe"
@@ -66,7 +75,7 @@ def download_youtube_audio(url: str) -> str:
         "outtmpl": output_path,
 
         # Pass the correct FFmpeg directory to yt-dlp
-        "ffmpeg_location": str(FFMPEG_DIR),
+        "ffmpeg_location": FFMPEG_EXE,
 
         "postprocessors": [
             {
