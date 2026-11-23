@@ -22,6 +22,7 @@ langchain-groq
 chromadb>=0.4.24
 langchain-huggingface>=0.0.3
 sentence-transformers>=2.6.1
+langchain-chroma
 
 
 # --- Export (PDF / TXT) ---
