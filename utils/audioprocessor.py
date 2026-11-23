@@ -19,36 +19,40 @@ import shutil
 #   utils/
 #     audioprocessor.py
 
+
+import os
+import shutil
+from pathlib import Path
+
 BASE_DIR = Path(__file__).resolve().parents[1]
 
-# FFMPEG_DIR = (
-#     BASE_DIR
-#     / "ffmpeg"
-#     / "ffmpeg-9.0.2-essentials_build"
-#     / "bin"
-# )
-if __name__ == "__main__" or shutil.which("ffmpeg") is None:
-    # Local Windows FFmpeg installation
-    LOCAL_FFMPEG_DIR = (
+if os.name == "nt":
+    # Local Windows setup
+    FFMPEG_DIR = (
         BASE_DIR
         / "ffmpeg"
         / "ffmpeg-9.0.2-essentials_build"
         / "bin"
     )
 
-FFMPEG_EXE = FFMPEG_DIR / "ffmpeg.exe"
-FFPROBE_EXE = FFMPEG_DIR / "ffprobe.exe"
+    FFMPEG_EXE = str(FFMPEG_DIR / "ffmpeg.exe")
+    FFPROBE_EXE = str(FFMPEG_DIR / "ffprobe.exe")
 
-if not FFMPEG_EXE.exists():
-    raise FileNotFoundError(f"FFmpeg not found: {FFMPEG_EXE}")
+else:
+    # Streamlit Cloud / Linux setup
+    FFMPEG_EXE = shutil.which("ffmpeg")
+    FFPROBE_EXE = shutil.which("ffprobe")
 
-if not FFPROBE_EXE.exists():
-    raise FileNotFoundError(f"FFprobe not found: {FFPROBE_EXE}")
+if not FFMPEG_EXE or not FFPROBE_EXE:
+    raise FileNotFoundError(
+        "FFmpeg or FFprobe not found. Check your installation."
+    )
 
-AudioSegment.converter = str(FFMPEG_EXE)
-AudioSegment.ffprobe = str(FFPROBE_EXE)
+AudioSegment.converter = FFMPEG_EXE
+AudioSegment.ffprobe = FFPROBE_EXE
 
 print("FFmpeg configured successfully!")
+
 
 
 # =========================================================
