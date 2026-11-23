@@ -1,0 +1,32 @@
+# --- UI ---
+streamlit>=1.32.0
+
+# --- Audio input / download ---
+yt-dlp>=2024.3.10
+pydub>=0.25.1
+ffmpeg-python>=0.2.0
+
+# --- Transcription (local Whisper) ---
+openai-whisper>=20231117
+torch>=2.1.0
+torchaudio>=2.1.0
+
+# --- LangChain + LCEL + Mistral (free API) ---
+langchain>=0.2.0
+langchain-core>=0.2.0
+langchain-community>=0.2.0
+langchain-mistralai>=0.1.6
+
+# --- RAG: vector store + embeddings ---
+chromadb>=0.4.24
+langchain-huggingface>=0.0.3
+sentence-transformers>=2.6.1
+
+# --- Export (PDF / TXT) ---
+fpdf2>=2.7.9
+reportlab>=4.1.0
+
+# --- Utilities ---
+python-dotenv>=1.0.1
+tiktoken>=0.6.0
+numpy>=1.26.4
